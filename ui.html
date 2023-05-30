@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #exportButton {
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <button id="exportButton" disabled>Export Layers</button>
+
+    <script>
+        // Listen for the 'plugin-loaded' message from the plugin code
+        onmessage = (event) => {
+            if (event.data.pluginMessage.type === 'plugin-loaded') {
+                // The plugin code has loaded, we can now show our UI
+                document.getElementById('exportButton').disabled = false;
+            } else if (event.data.pluginMessage.type === 'zip-ready') {
+                // The zip file is ready, we can now download it
+                const link = document.createElement('a');
+                link.href = 'data:application/zip;base64,' + event.data.pluginMessage.content;
+                link.download = 'export.zip';
+                link.click();
+            }
+        };
+
+        document.getElementById('exportButton').addEventListener('click', () => {
+            parent.postMessage({ pluginMessage: { type: 'export-layers' } }, '*');
+        });
+    </script>
+</body>
+</html>
