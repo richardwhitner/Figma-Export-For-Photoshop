@@ -2,6 +2,5 @@ This is a work-in-progress Figma plugin, written largely by ChatGPT-4, to export
 
 Currently all exported layers are PNG.
 
-Link to Photoshop Script will go here.
-
-Instructions coming.
+Photoshop script to convert exported layers into PSDs:
+https://github.com/richardwhitner/PNG-to-PSD
